@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import javax.xml.bind.JAXBContext;
@@ -22,12 +23,16 @@ public class BookMain {
 	public static void main(String[] args) {
 		//createBookstore();
 		
-		BookStore bookStore = readBookstoreFromXML(BOOKSTORE_XML);
-		// prove unmarshalling worked by printing the books list
-		for (Book book : bookStore.getBooksList()) {
-			System.out.printf("Book name: %s - ISBN: %s%n",
-					book.getName(), book.getIsbn());
-		}
+//		BookStore bookStore = readBookstoreFromXML(BOOKSTORE_XML);
+//		// prove unmarshalling worked by printing the books list
+//		for (Book book : bookStore.getBooksList()) {
+//			System.out.printf("Book name: %s - ISBN: %s%n",
+//					book.getName(), book.getIsbn());
+//		}
+		
+		Book book = readSingleBookJSON("./book.json");
+		System.out.printf("Book name: %s - ISBN: %s%n",
+				book.getName(), book.getIsbn());
 	}
 	
 	private static void createBookstore() {
@@ -93,5 +98,19 @@ public class BookMain {
 		}
 		
 		return bookStore;
+	}
+	
+	private static Book readSingleBookJSON(String path) {
+		Book book = null;
+		
+		try {
+			ObjectMapper objectMapper = new ObjectMapper();
+			URL url = new URL("file:" + path);
+			book =  objectMapper.readValue(url, Book.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return book;
 	}
 }

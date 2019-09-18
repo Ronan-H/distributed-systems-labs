@@ -1,6 +1,8 @@
 package ie.gmit.ds;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +20,17 @@ public class BookMain {
 	private static final String BOOKSTORE_XML = "./bookstore-jaxb.xml";
 
 	public static void main(String[] args) {
-
+		//createBookstore();
+		
+		BookStore bookStore = readBookstoreFromXML(BOOKSTORE_XML);
+		// prove unmarshalling worked by printing the books list
+		for (Book book : bookStore.getBooksList()) {
+			System.out.printf("Book name: %s - ISBN: %s%n",
+					book.getName(), book.getIsbn());
+		}
+	}
+	
+	private static void createBookstore() {
 		ArrayList<Book> bookList = new ArrayList<Book>();
 
 		// create books
@@ -67,5 +80,18 @@ public class BookMain {
 		} catch (IOException | JAXBException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private static BookStore readBookstoreFromXML(String path) {
+		Unmarshaller jaxbUnmarshaller;
+		BookStore bookStore = null;
+		try {
+			jaxbUnmarshaller = JAXBContext.newInstance(BookStore.class).createUnmarshaller();
+			bookStore = (BookStore) jaxbUnmarshaller.unmarshal(new FileReader(BOOKSTORE_XML));
+		} catch (JAXBException | FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		return bookStore;
 	}
 }

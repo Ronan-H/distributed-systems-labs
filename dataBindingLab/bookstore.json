@@ -1,0 +1,15 @@
+{
+  "name" : "Charlie Byrne's",
+  "location" : "Galway",
+  "booksList" : [ {
+    "author" : "Giuseppe Tomasi De Lampedusa",
+    "name" : "The Leopard",
+    "publisher" : "Vintage Classics",
+    "isbn" : "9780099512158"
+  }, {
+    "author" : "Peter Matthiessen",
+    "name" : "Shadow Country",
+    "publisher" : "Random House",
+    "isbn" : "978-0-6796-4019-6"
+  } ]
+}

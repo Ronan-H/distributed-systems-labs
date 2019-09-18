@@ -1,11 +1,16 @@
 package ie.gmit.ds;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class BookMain {
 
@@ -38,6 +43,7 @@ public class BookMain {
 		
 		JAXBContext context;
 		try {
+			// == XML ==
 			context = JAXBContext.newInstance(BookStore.class);
 			Marshaller jaxbMarshaller = context.createMarshaller();
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -46,7 +52,19 @@ public class BookMain {
 			jaxbMarshaller.marshal(bookstore, System.out);
 			// Write to File
 			jaxbMarshaller.marshal(bookstore, new File("./bookstore-jaxb.xml"));
-		} catch (JAXBException e) {
+			
+			// == JSON ==
+			// Object to JSON
+			ObjectMapper jsonMarshaller = new ObjectMapper();
+			jsonMarshaller.configure(DeserializationFeature.UNWRAP_ROOT_VALUE, true);
+			String jsonBookStore =
+					jsonMarshaller.writerWithDefaultPrettyPrinter()
+					.writeValueAsString(bookstore);
+			System.out.println(jsonBookStore);
+			FileWriter fileWriter = new FileWriter("./bookstore.json");
+			fileWriter.write(jsonBookStore);
+			fileWriter.close();
+		} catch (IOException | JAXBException e) {
 			e.printStackTrace();
 		}
 	}

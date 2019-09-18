@@ -1,10 +1,11 @@
 package ie.gmit.ds;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 public class BookMain {
 
@@ -34,6 +35,19 @@ public class BookMain {
 		bookstore.setName("Charlie Byrne's");
 		bookstore.setLocation("Galway");
 		bookstore.setBookList(bookList);
-
+		
+		JAXBContext context;
+		try {
+			context = JAXBContext.newInstance(BookStore.class);
+			Marshaller jaxbMarshaller = context.createMarshaller();
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			
+			// Write to System.out
+			jaxbMarshaller.marshal(bookstore, System.out);
+			// Write to File
+			jaxbMarshaller.marshal(bookstore, new File("./bookstore-jaxb.xml"));
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
 	}
 }

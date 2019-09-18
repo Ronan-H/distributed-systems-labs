@@ -2,8 +2,18 @@ package ie.gmit.ds;
 
 import java.util.ArrayList;
 
-public class BookStore {
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
 
+//This statement means that class "Bookstore.java" is the root-element of our example
+@XmlRootElement(namespace = "ie.gmit.ds")
+public class BookStore {
+	
+	// XmLElementWrapper generates a wrapper element around XML representation
+	@XmlElementWrapper(name = "bookList")
+	// XmlElement sets the name of the entities
+	@XmlElement(name = "book")
     private ArrayList<Book> bookList;
     private String name;
     private String location;

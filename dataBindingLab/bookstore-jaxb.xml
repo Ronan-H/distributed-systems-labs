@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:bookStore xmlns:ns2="ie.gmit.ds">
+    <bookList>
+        <book>
+            <author>Giuseppe Tomasi De Lampedusa</author>
+            <title>The Leopard</title>
+            <publisher>Vintage Classics</publisher>
+            <isbn>9780099512158</isbn>
+        </book>
+        <book>
+            <author>Peter Matthiessen</author>
+            <title>Shadow Country</title>
+            <publisher>Random House</publisher>
+            <isbn>978-0-6796-4019-6</isbn>
+        </book>
+    </bookList>
+    <location>Galway</location>
+    <name>Charlie Byrne's</name>
+</ns2:bookStore>

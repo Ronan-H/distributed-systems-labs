@@ -31,12 +31,13 @@ class AddPerson {
                 break;
             }
 
-            // *************************************************************
-            // ADD CODE HERE TO CREATE A PERSON USING THE APPROPRIATE BUILDERS
-            // **************************************************************
+            person.addPhones(
+            		Person.PhoneNumber.newBuilder()
+	            		.setNumber(number)
+	            		.build());
         }
 
-        return;
+        return person.build();
     }
 
     // Main function:  Reads the entire address book from a file,
@@ -66,8 +67,6 @@ class AddPerson {
         addressBook.addPeople(PromptForAddress(new BufferedReader(new InputStreamReader(System.in)), System.out));
 
 
-        // ****************************************
-        // ADD CODE HERE TO WRITE THE ADDRESS BOOK TO THE ADDRESS_BOOK_FILE
-        // ****************************************
+        addressBook.build().writeTo(new FileOutputStream("./addressBook.data"));
     }
 }

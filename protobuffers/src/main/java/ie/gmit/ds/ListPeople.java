@@ -41,9 +41,7 @@ class ListPeople {
   // Main function:  Reads the entire address book from a file and prints all
   //   the information inside.
   public static void main(String[] args) throws Exception {
-    // ****************************************
-    // ADD CODE HERE TO READ THE ADDRESS BOOK FROM A FILE
-    // ****************************************
-
+    AddressBook addressBook = AddressBook.parseFrom(new FileInputStream("./addressBook.data"));
+    Print(addressBook);
   }
 }

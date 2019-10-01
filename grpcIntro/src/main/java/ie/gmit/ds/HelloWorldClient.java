@@ -40,11 +40,26 @@ public class HelloWorldClient {
         }
         logger.info("Greeting: " + response.getMessage());
     }
+    
+    /** Say hello to server again */
+    public void greetAgain(String name) {
+        logger.info("Will try to greet " + name + " ...");
+        HelloRequest request = HelloRequest.newBuilder().setName(name).build();
+        HelloReply response;
+        try {
+            response = greeterClientStub.sayHelloAgain(request);
+        } catch (StatusRuntimeException e) {
+            logger.log(Level.WARNING, "RPC failed: {0}", e.getStatus());
+            return;
+        }
+        logger.info("Greeting: " + response.getMessage());
+    }
 
     public static void main(String[] args) throws Exception {
         HelloWorldClient client = new HelloWorldClient("localhost", 50051);
         try {
             client.greet("world");
+            client.greetAgain("world again");
         } finally {
             client.shutdown();
         }
